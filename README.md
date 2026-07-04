@@ -12,3 +12,6 @@ To use this, you'll need to:
 2. Click "create a new script"
 3. Download or copy and paste the code from: https://github.com/garbhj/youtube-shorts-dislike-button/blob/main
 4. Click save, and enable it when you visit Youtube (it should be enabled by default after saving)
+
+Note: Always verify that a userscript is safe before running it. Malicious scripts can be used to steal personal information, among other things.
+- Be especially careful with obfuscated scripts (meaning scripts that are made intentionally hard to read).
