@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         YouTube Shorts: Restore Thumbs Up & Dislike
 // @namespace    http://tampermonkey.net/
-// @version      2.2
-// @description  Reverts the heart button to a thumbs-up and re-adds the dislike button independently.
+// @version      2.4
+// @description  Reverts the heart button to a thumbs-up and re-adds the dislike button independently. Fixes state and UI glitches after scroll.
 // @author       Garbhj
 // @match        *.youtube.com/shorts/*
 // @grant        none
@@ -110,7 +110,7 @@
 
                         btn.setAttribute('aria-pressed', newState.toString());
 
-                        if (newState) {
+                        if (newState) {  // Handle logic to un-press like button if dislike is pressed
                             btn.classList.replace('--tonal', '--filled');
 
                             const realLikeBtn = likeBtnWrapper.querySelector('button');
@@ -162,6 +162,19 @@
                     labelText.textContent = "Dislike";
                 }
             }
+
+            // Handle logic to un-press dislike button if like is pressed
+            const realLikeBtn = likeBtnWrapper.querySelector("button");
+            realLikeBtn.addEventListener("click", () => {
+                requestAnimationFrame(() => {
+                    if (realLikeBtn.getAttribute("aria-pressed") === "true") {
+                        const dislikeBtn = dislikeWrapper.querySelector("button");
+                        dislikeBtn.setAttribute("aria-pressed", "false");
+                        dislikeBtn.classList.replace("--filled", "--tonal");
+                    }
+                });
+            });
+
         });
     };
 
@@ -170,12 +183,13 @@
     let isThrottled = false;
     const observer = new MutationObserver(() => {
         if (isThrottled) return;
-        updateButtons();
         isThrottled = true;
-        setTimeout(() => { isThrottled = false; }, 20);
+        window.requestAnimationFrame(() => {
+            updateButtons();
+            isThrottled = false;
+        });
     });
 
-    // Important: Reintroduced `attributes: true` from v1.6 to ensure MutationObserver fires when YouTube changes styles dynamically
     observer.observe(document.body, {
         childList: true,
         subtree: true,
