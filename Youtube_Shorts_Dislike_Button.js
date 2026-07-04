@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name         YouTube Shorts: Restore Thumbs Up & Dislike
 // @namespace    http://tampermonkey.net/
-// @version      2.1
+// @version      2.2
 // @description  Reverts the heart button to a thumbs-up and re-adds the dislike button independently.
 // @author       Garbhj
-// @match        *://*.youtube.com/shorts/*
+// @match        *.youtube.com/shorts/*
 // @grant        none
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=youtube.com
 // ==/UserScript==
 
 (function() {
@@ -54,8 +55,19 @@
     `;
     document.head.appendChild(style);
 
+    let currentUrl = window.location.href;
+
     const updateButtons = () => {
         if (!window.location.pathname.startsWith('/shorts/')) return;
+
+        // Reset Dislike button states if we just scrolled to a new Short (URL change)
+        if (window.location.href !== currentUrl) {
+            currentUrl = window.location.href;
+            document.querySelectorAll('.custom-dislike-btn button').forEach(btn => {
+                btn.setAttribute('aria-pressed', 'false');
+                btn.className = btn.className.replace(/--filled/gi, '--tonal');
+            });
+        }
 
         document.querySelectorAll('reel-action-bar-view-model').forEach(bar => {
             const likeBtnWrapper = bar.querySelector('like-button-view-model:not(.custom-dislike-btn)');
@@ -80,13 +92,11 @@
                     btn.setAttribute("aria-label", "Dislike this video");
                     btn.setAttribute("aria-pressed", "false");
 
-                    // Reset the newly cloned button back to unpressed (--tonal) visually
-                    btn.className = btn.className.replace(/--filled/g, '--tonal');
+                    // Reset the newly cloned button back to unpressed (--tonal format) visually
+                    btn.classList.replace('--filled', '--tonal');
 
-                    // Inject a fresh SVG element via DOM methods.
                     const iconContainer = btn.querySelector('.ytSpecButtonShapeNextIcon');
                     if (iconContainer) {
-                        // replaceChildren() is safe from YouTube's Trusted Types policy
                         iconContainer.replaceChildren(createBaseSvgElement());
                     }
 
@@ -98,25 +108,59 @@
                         const isCurrentlyPressed = btn.getAttribute('aria-pressed') === 'true';
                         const newState = !isCurrentlyPressed;
 
-                        // Toggle SVG State (Handled instantly by injected CSS)
                         btn.setAttribute('aria-pressed', newState.toString());
 
-                        // Toggle Background State (--tonal is default, --filled is pressed)
                         if (newState) {
-                            btn.className = btn.className.replace(/--tonal/g, '--filled');
+                            btn.classList.replace('--tonal', '--filled');
 
-                            // Optional luxury feature: If user dislikes, visually turn off the like button
                             const realLikeBtn = likeBtnWrapper.querySelector('button');
                             if (realLikeBtn && realLikeBtn.getAttribute('aria-pressed') === 'true') {
-                                realLikeBtn.click(); // Undoes YouTube's real Like Action
+                                realLikeBtn.click();
                             }
                         } else {
-                            btn.className = btn.className.replace(/--filled/g, '--tonal');
+                            btn.classList.replace('--filled', '--tonal');
                         }
                     });
                 }
 
                 likeBtnWrapper.insertAdjacentElement('afterend', dislikeWrapper);
+            } else {
+                // Sync Classes: Keep cloned UI dynamic classes from going stale when YouTube recycles elements
+                const syncClasses = (selector) => {
+                    const src = likeBtnWrapper.querySelector(selector);
+                    const tgt = dislikeWrapper.querySelector(selector);
+                    if (src && tgt) {
+                        if (selector === 'button') {
+                            const isPressed = tgt.getAttribute('aria-pressed') === 'true';
+                            let targetClassName = src.classList.value;
+
+                            // Adjust the class logic safely so our cloned button retains its independent toggle state
+                            if (isPressed) {
+                                targetClassName = targetClassName.replace(/--tonal/gi, '--filled');
+                            } else {
+                                targetClassName = targetClassName.replace(/--filled/gi, '--tonal');
+                            }
+
+                            if (tgt.className !== targetClassName) {
+                                tgt.className = targetClassName;
+                            }
+                        } else {
+                            if (tgt.className !== src.className) {
+                                tgt.className = src.className;
+                            }
+                        }
+                    }
+                };
+
+                syncClasses('label');
+                syncClasses('button');
+                syncClasses('yt-touch-feedback-shape');
+
+                // Enforce the text (In case YouTube's recycler engine accidentally wiped it)
+                const labelText = dislikeWrapper.querySelector(".ytSpecButtonShapeWithLabelLabel span");
+                if (labelText && labelText.textContent !== "Dislike") {
+                    labelText.textContent = "Dislike";
+                }
             }
         });
     };
@@ -131,9 +175,12 @@
         setTimeout(() => { isThrottled = false; }, 20);
     });
 
+    // Important: Reintroduced `attributes: true` from v1.6 to ensure MutationObserver fires when YouTube changes styles dynamically
     observer.observe(document.body, {
         childList: true,
-        subtree: true
+        subtree: true,
+        attributes: true,
+        attributeFilter: ['class', 'aria-pressed', 'd']
     });
 
 })();
