@@ -1,20 +1,24 @@
 # Description
+**A lightweight userscript that enhances YouTube Shorts:**
+  - replaces the new "Heart" icon with the old "Thumbs-up" icon.
+  - returns the Dislike button, and maps a double-click to "Don't recommend this channel".
+
 As of the end of June 2026, Youtube has removed the Dislike button from Youtube Shorts, and is changing the Like button into a Heart icon.
 For the few of us who watch Youtube Shorts on desktop for some reason, it's not so hard to revert these changes. 
 
-**This Userscript reverts the heart button to a thumbs-up and re-adds the dislike button to Youtube Shorts.**
 **NOTE:**
-- With version 3, a **double-tap of the dislike button** maps to "Don't recommend this channel".
-  - To manage your "Not Interested" settings, go to the [Google My Activity YouTube user feedback page](https://myactivity.google.com/page?hl=en&page=youtube_user_feedback).
-- In version 2, the dislike button is cosmetic only, as Youtube has removed dislikes from shorts entirely.
+  - In version 3, a **double-tap of the dislike button** maps to "Don't recommend this channel" in the top-right menu.
+    - To manage your "Not Interested" settings, go to the [Google My Activity YouTube user feedback page](https://myactivity.google.com/page?hl=en&page=youtube_user_feedback).
+  - In version 2, the dislike button is cosmetic only, as Youtube has removed dislikes from shorts entirely.
 
 # Instructions
 To use this, you'll need to:
-1. Install a userscript manager (such as [Tampermonkey from the Chrome Web Store](https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en)).
-2. Click "create a new script".
-3. Download or copy and paste the code from [this repo](https://github.com/garbhj/youtube-shorts-dislike-button).
-4. Click save, and enable it when you visit Youtube (it should be enabled by default after saving).
+  1. Install a userscript manager (such as [Tampermonkey from the Chrome Web Store](https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en)).
+  2. Click "create a new script".
+  3. Download or copy and paste the code from [this repo](https://github.com/garbhj/youtube-shorts-dislike-button).
+  4. Click save, and enable it when you visit Youtube (it should be enabled by default after saving).
 
 Note: Always verify that a userscript is safe before running it. Malicious scripts can be used to steal session data and perform unauthorized actions, among other things.
 
 Verify permissions (@grant) and scope (@match) in the header, and scan the code for any suspicious network connections. Be especially careful with obfuscated scripts (meaning scripts intentionally modified to be unreadable). Or just ask ChatGPT, idk.
+
