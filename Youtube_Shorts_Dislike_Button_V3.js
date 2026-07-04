@@ -54,6 +54,7 @@
         }
         if (attempts < 20) { // ~20 frames (~1/3s) is plenty for the popup to render
             requestAnimationFrame(() => clickDontRecommend(attempts + 1));
+            console.log("To view and edit your 'Don't recommend this channel' settings, visit: https://myactivity.google.com/page?hl=en&page=youtube_user_feedback")
         }
     };
 
@@ -139,8 +140,8 @@
                         e.stopPropagation();
                         const currentTime = new Date().getTime();
                         const tapLength = currentTime - lastTap;
-                        console.log(`Current Time: ${new Date(currentTime).toLocaleString()}`);
-                        console.log(`Time Since Last Tap: ${tapLength}ms`);
+                        //console.log(`Current Time: ${new Date(currentTime).toLocaleString()}`);
+                        //console.log(`Time Since Last Tap: ${tapLength}ms`);
 
                         lastTap = currentTime;
                         // Check for Double-click/Double-tap
