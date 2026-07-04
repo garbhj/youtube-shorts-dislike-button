@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         YouTube Shorts: Restore Thumbs Up & Dislike
-// @namespace    http://tampermonkey.net/
+// @namespace    https://github.com/garbhj
 // @version      3.1
 // @description  Reverts the heart button to a thumbs-up and re-adds the dislike button independently. Double-tapping Dislike also triggers "Don't recommend this channel". Fixes state and UI glitches after scroll.
 // @author       Garbhj
