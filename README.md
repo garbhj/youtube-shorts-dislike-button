@@ -1,17 +1,20 @@
 # Description
-As of the end of June 2026, Youtube has removed the Dislike button from Youtube Shorts, and is, in a rolling manner, changing the Like button into a Heart icon (like on TikTok or Instagram).
-Now, for those of us who watch Youtube Shorts on desktop for some reason, it's much easier to revert these changes than on mobile. 
+As of the end of June 2026, Youtube has removed the Dislike button from Youtube Shorts, and is changing the Like button into a Heart icon.
+For the few of us who watch Youtube Shorts on desktop for some reason, it's not so hard to revert these changes. 
 
-**This Userscript everts the heart button to a thumbs-up and re-adds the dislike button to Youtube Shorts.**
-*NOTE: Sadly, the re-added dislike button is cosmetic only, as Youtube has removed dislikes from shorts entirely.*
+**This Userscript reverts the heart button to a thumbs-up and re-adds the dislike button to Youtube Shorts.**
+**NOTE:**
+- With version 3, a **double-tap of the dislike button** maps to "Don't recommend this channel".
+  - To manage your "Not Interested" settings, go to the [Google My Activity YouTube user feedback page](https://myactivity.google.com/page?hl=en&page=youtube_user_feedback).
+- In version 2, the dislike button is cosmetic only, as Youtube has removed dislikes from shorts entirely.
 
 # Instructions
 To use this, you'll need to:
+1. Install a userscript manager (such as [Tampermonkey from the Chrome Web Store](https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en)).
+2. Click "create a new script".
+3. Download or copy and paste the code from [this repo](https://github.com/garbhj/youtube-shorts-dislike-button).
+4. Click save, and enable it when you visit Youtube (it should be enabled by default after saving).
 
-1. Go to the Chrome Web Store and install the Tampermonkey Chrome extension (or something similar).
-2. Click "create a new script"
-3. Download or copy and paste the code from: https://github.com/garbhj/youtube-shorts-dislike-button/blob/main
-4. Click save, and enable it when you visit Youtube (it should be enabled by default after saving)
+Note: Always verify that a userscript is safe before running it. Malicious scripts can be used to steal session data and perform unauthorized actions, among other things.
 
-Note: Always verify that a userscript is safe before running it. Malicious scripts can be used to steal personal information, among other things.
-- Be especially careful with obfuscated scripts (meaning scripts that are made intentionally hard to read).
+Verify permissions (@grant) and scope (@match) in the header, and scan the code for any suspicious network connections. Be especially careful with obfuscated scripts (meaning scripts intentionally modified to be unreadable). Or just ask ChatGPT, idk.
