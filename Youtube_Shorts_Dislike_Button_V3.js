@@ -54,20 +54,20 @@
         }
         if (attempts < 20) { // ~20 frames (~1/3s) is plenty for the popup to render
             requestAnimationFrame(() => clickDontRecommend(attempts + 1));
-            console.log("To view and edit your 'Don't recommend this channel' settings, visit: https://myactivity.google.com/page?hl=en&page=youtube_user_feedback")
         }
     };
 
     // Open the "More actions" menu for this Short and select "Don't recommend this channel"
     const triggerDontRecommend = () => {
         const moreBtn = document.querySelector('#right-controls button[aria-label="More actions"]');
-        console.log("Found button:", moreBtn);
+        //console.log("Found button:", moreBtn);
         if (!moreBtn) {
             console.error("Failed to find the More Actions button.");
             return;
         }
         moreBtn.click();
         requestAnimationFrame(() => clickDontRecommend());
+        console.log("To view and edit your 'Don't recommend this channel' settings, visit: https://myactivity.google.com/page?hl=en&page=youtube_user_feedback")
     };
 
     // Override button graphics using Native CSS (Instant)
