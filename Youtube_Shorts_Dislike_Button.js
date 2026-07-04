@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         YouTube Shorts: Restore Thumbs Up & Dislike
-// @namespace    http://tampermonkey.net/
+// @namespace    https://github.com/garbhj
 // @version      2.4
 // @description  Reverts the heart button to a thumbs-up and re-adds the dislike button independently. Fixes state and UI glitches after scroll.
 // @author       Garbhj
