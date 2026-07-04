@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YouTube Shorts: Restore Thumbs Up & Dislike
 // @namespace    http://tampermonkey.net/
-// @version      3.0
+// @version      3.1
 // @description  Reverts the heart button to a thumbs-up and re-adds the dislike button independently. Double-tapping Dislike also triggers "Don't recommend this channel". Fixes state and UI glitches after scroll.
 // @author       Garbhj
 // @match        *.youtube.com/shorts/*
@@ -167,6 +167,19 @@
                 }
 
                 likeBtnWrapper.insertAdjacentElement('afterend', dislikeWrapper);
+
+                // Handle logic to un-press dislike button if like is pressed
+                const realLikeBtn = likeBtnWrapper.querySelector("button");
+                realLikeBtn.addEventListener("click", () => {
+                    requestAnimationFrame(() => {
+                        if (realLikeBtn.getAttribute("aria-pressed") === "true") {
+                            const dislikeBtn = dislikeWrapper.querySelector("button");
+                            dislikeBtn.setAttribute("aria-pressed", "false");
+                            dislikeBtn.classList.replace("--filled", "--tonal");
+                        }
+                    });
+                });
+
             } else {
                 // Sync Classes: Keep cloned UI dynamic classes from going stale when YouTube recycles elements
                 const syncClasses = (selector) => {
@@ -205,19 +218,6 @@
                     labelText.textContent = "Dislike";
                 }
             }
-
-            // Handle logic to un-press dislike button if like is pressed
-            const realLikeBtn = likeBtnWrapper.querySelector("button");
-            realLikeBtn.addEventListener("click", () => {
-                requestAnimationFrame(() => {
-                    if (realLikeBtn.getAttribute("aria-pressed") === "true") {
-                        const dislikeBtn = dislikeWrapper.querySelector("button");
-                        dislikeBtn.setAttribute("aria-pressed", "false");
-                        dislikeBtn.classList.replace("--filled", "--tonal");
-                    }
-                });
-            });
-
         });
     };
 
