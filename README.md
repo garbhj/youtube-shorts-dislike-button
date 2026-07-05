@@ -24,5 +24,7 @@ Verify permissions (@grant) and scope (@match) in the header, and scan the code 
 
 # Other Notes
 If you have an extension that lets you inject scriptlets and just want to replace the Heart with the old Thumbs-up icon (e.g. UBlock Origin, but NOT UBlock Origin Lite because of Manifest V3 compliance on Chrome), you can use:
+
 www.youtube.com##+js(insert-css, like-button-view-model button[aria-pressed="false"] svg path { d: path("[insert empty thumbs up SVG path]") !important; })
+
 www.youtube.com##+js(insert-css, like-button-view-model button[aria-pressed="true"] svg path { d: path("[insert filled thumbs up SVG path]") !important; })
