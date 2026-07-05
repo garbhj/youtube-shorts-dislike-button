@@ -24,6 +24,9 @@ Verify permissions (@grant) and scope (@match) in the header, and scan the code 
 
 Also uploaded to GreasyFork for easier installation [here](https://greasyfork.org/en/scripts/585643-youtube-shorts-restore-thumbs-up-dislike).
 
+# Demo
+https://github.com/user-attachments/assets/a96f7c25-a7f7-4ef8-919d-c2b875f176d4
+
 # Other Notes
 If you have an extension that lets you inject scriptlets and just want to replace the Heart with the old Thumbs-up icon (e.g. UBlock Origin, but NOT UBlock Origin Lite because of Manifest V3 compliance on Chrome), you can use:
 
