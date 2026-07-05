@@ -22,6 +22,8 @@ Note: Always verify that a userscript is safe before running it. Malicious scrip
 
 Verify permissions (@grant) and scope (@match) in the header, and scan the code for any suspicious network connections. Be especially careful with obfuscated scripts (meaning scripts intentionally modified to be unreadable). Or just ask ChatGPT, idk.
 
+Also uploaded to GreasyFork for easier installation [here](https://greasyfork.org/en/scripts/585643-youtube-shorts-restore-thumbs-up-dislike).
+
 # Other Notes
 If you have an extension that lets you inject scriptlets and just want to replace the Heart with the old Thumbs-up icon (e.g. UBlock Origin, but NOT UBlock Origin Lite because of Manifest V3 compliance on Chrome), you can use:
 
