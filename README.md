@@ -1,7 +1,7 @@
 # Description
 **A lightweight userscript that enhances YouTube Shorts:**
   - replaces the new "Heart" icon with the old "Thumbs-up" icon.
-  - returns the Dislike button, and maps a double-click to "Don't recommend this channel".
+  - recreates the Dislike button, and maps a double-click to "Don't recommend this channel".
 
 As of the end of June 2026, Youtube has removed the Dislike button from Youtube Shorts, and is changing the Like button into a Heart icon.
 For the few of us who watch Youtube Shorts on desktop for some reason, it's not so hard to revert these changes. 
@@ -9,7 +9,7 @@ For the few of us who watch Youtube Shorts on desktop for some reason, it's not 
 **NOTE:**
   - In version 3, a **double-tap of the dislike button** maps to "Don't recommend this channel" in the top-right menu.
     - To manage your "Not Interested" settings, go to the [Google My Activity YouTube user feedback page](https://myactivity.google.com/page?hl=en&page=youtube_user_feedback).
-  - In version 2, the dislike button is cosmetic only, as Youtube has removed dislikes from shorts entirely.
+  - In version 2, the dislike button is cosmetic only, and it doesn't actually add a dislike to the video in either version (nor does it persist after a refresh). I may try to implement this at some point. 
 
 # Instructions
 To use this, you'll need to:
