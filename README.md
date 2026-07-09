@@ -7,7 +7,8 @@ As of the end of June 2026, Youtube has removed the Dislike button from Youtube 
 For the few of us who watch Youtube Shorts on desktop for some reason, it's not so hard to revert these changes. 
 
 **NOTE:**
-  - In version 3, a **double-tap of the dislike button** maps to "Don't recommend this channel" in the top-right menu.
+  - **Only in version 4 does the dislike button actually register the action with Youtube (sends POST request to /youtubei/v1/like/dislike)**
+  - In versions 3 and 4, a **double-tap of the dislike button** maps to "Don't recommend this channel" in the top-right menu.
     - To manage your "Not Interested" settings, go to the [Google My Activity YouTube user feedback page](https://myactivity.google.com/page?hl=en&page=youtube_user_feedback).
   - In version 2, the dislike button is cosmetic only, and it doesn't actually add a dislike to the video in either version (nor does it persist after a refresh). I may try to implement this at some point. 
 
@@ -20,7 +21,7 @@ To use this, you'll need to:
 
 Note: Always verify that a userscript is safe before running it. Malicious scripts can be used to steal session data and perform unauthorized actions, among other things.
 
-Verify permissions (@grant) and scope (@match) in the header, and scan the code for any suspicious network connections. Be especially careful with obfuscated scripts (meaning scripts intentionally modified to be unreadable). Or just ask ChatGPT, idk.
+Verify permissions (@grant) and scope (@match) in the header, and scan the code for any suspicious network connections. Be especially careful with obfuscated scripts (meaning scripts intentionally modified to be unreadable). Or just ask ChatGPT.
 
 Also uploaded to GreasyFork for easier installation [here](https://greasyfork.org/en/scripts/585643-youtube-shorts-restore-thumbs-up-dislike).
 
@@ -28,8 +29,4 @@ Also uploaded to GreasyFork for easier installation [here](https://greasyfork.or
 https://github.com/user-attachments/assets/a96f7c25-a7f7-4ef8-919d-c2b875f176d4
 
 # Other Notes
-If you have an extension that lets you inject scriptlets and just want to replace the Heart with the old Thumbs-up icon (e.g. UBlock Origin, but NOT UBlock Origin Lite because of Manifest V3 compliance on Chrome), you can use:
-
-www.youtube.com##+js(insert-css, like-button-view-model button[aria-pressed="false"] svg path { d: path("[insert empty thumbs up SVG path]") !important; })
-
-www.youtube.com##+js(insert-css, like-button-view-model button[aria-pressed="true"] svg path { d: path("[insert filled thumbs up SVG path]") !important; })
+If you have feedback or encounter any problems, feel free to open an issue, and I may or may not ever get around to looking at it (who knows how long this script will even be relevant for).
