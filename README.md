@@ -10,7 +10,7 @@ For the few of us who watch Youtube Shorts on desktop for some reason, it's not 
   - **Only in version 4 does the dislike button actually register the action with Youtube (sends POST request to /youtubei/v1/like/dislike)**
   - In versions 3 and 4, a **double-tap of the dislike button** maps to "Don't recommend this channel" in the top-right menu.
     - To manage your "Not Interested" settings, go to the [Google My Activity YouTube user feedback page](https://myactivity.google.com/page?hl=en&page=youtube_user_feedback).
-  - In version 2, the dislike button is cosmetic only, and it doesn't actually add a dislike to the video in either version (nor does it persist after a refresh). I may try to implement this at some point. 
+  - In version 2, the dislike button is cosmetic only.
 
 # Instructions
 To use this, you'll need to:
