@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YouTube Shorts: Restore Thumbs Up & Dislike
 // @namespace    https://github.com/garbhj
-// @version      4.2
+// @version      4.4
 // @description  Reverts the heart button to a thumbs-up and re-adds the dislike button independently. Double-tapping Dislike also triggers "Don't recommend this channel". Fixes state and UI glitches after scroll.
 // @author       Garbhj
 // @match        *://*.youtube.com/*
@@ -212,15 +212,35 @@
                     // Set initial visual state of dislike button
                     const isDisliked = getDislikeState(bar);
                     btn.setAttribute("aria-pressed", isDisliked.toString());
-                    if (isDisliked) {
-                        btn.classList.replace('--tonal', '--filled');
-                    } else {
-                        btn.classList.replace('--filled', '--tonal');
-                    }
+                    btn.className = isDisliked
+                        ? btn.className.replace(/--tonal/gi, '--filled')
+                        : btn.className.replace(/--filled/gi, '--tonal');
 
                     const iconContainer = btn.querySelector('.ytSpecButtonShapeNextIcon');
                     if (iconContainer) {
                         iconContainer.replaceChildren(createBaseSvgElement());
+                    }
+
+                    // Recreate button indenting when pressed
+                    const touchFeedback = btn.querySelector('yt-touch-feedback-shape');
+                    if (touchFeedback) {
+                        touchFeedback.classList.remove('ytSpecTouchFeedbackShapeDown');
+
+                        const addIndent = () => touchFeedback.classList.add('ytSpecTouchFeedbackShapeDown');
+                        const removeIndent = () => touchFeedback.classList.remove('ytSpecTouchFeedbackShapeDown');
+
+                        btn.addEventListener('pointerdown', addIndent);
+                        btn.addEventListener('pointerup', removeIndent);
+                        btn.addEventListener('pointercancel', removeIndent);
+                        btn.addEventListener('pointerleave', removeIndent);
+
+                        btn.addEventListener('keydown', (e) => {
+                            if (e.key === 'Enter' || e.key === ' ') addIndent();
+                        });
+                        btn.addEventListener('keyup', (e) => {
+                            if (e.key === 'Enter' || e.key === ' ') removeIndent();
+                        });
+                        btn.addEventListener('blur', removeIndent);
                     }
 
                     // Set event logic of dislike button
@@ -278,6 +298,15 @@
                 });
 
             } else {
+                // Update button state (since DOM elements are sometimes recycled)
+                const btn = dislikeWrapper.querySelector("button");
+                if (btn) {
+                    const isDisliked = getDislikeState(bar);
+                    if (btn.getAttribute("aria-pressed") !== isDisliked.toString()) {
+                        btn.setAttribute("aria-pressed", isDisliked.toString());
+                    }
+                }
+
                 // Keep cloned UI dynamic classes styles in sync
                 const syncClasses = (selector) => {
                     const src = likeBtnWrapper.querySelector(selector);
@@ -306,7 +335,6 @@
 
                 syncClasses('label');
                 syncClasses('button');
-                syncClasses('yt-touch-feedback-shape');
 
                 const labelText = dislikeWrapper.querySelector(".ytSpecButtonShapeWithLabelLabel span");
                 if (labelText && labelText.textContent !== "Dislike") {
